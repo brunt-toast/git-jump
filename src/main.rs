@@ -35,6 +35,11 @@ fn main() {
         panic!();
     }
     println!("{}", fzf_output[0]);
+
+    match try_delete_file(temp_file.clone()) {
+        Ok(_) => {}
+        Err(e) => eprintln!("Could not delete the temp file: {}", e),
+    }
 }
 
 fn fzf(path: &str) -> Result<Vec<String>, String> {
