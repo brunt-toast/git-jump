@@ -18,7 +18,7 @@ fn main() {
         Err(e) => eprintln!("Could not delete the temp file: {}", e),
     }
 
-    let mut file = File::create(temp_file).expect("Could not create temp file");
+    let mut file = File::create(temp_file.clone()).expect("Could not create temp file");
     match get_repos() {
         Ok(lines) => {
             file.write_all(lines.join("\n").as_bytes())
@@ -28,6 +28,25 @@ fn main() {
     }
 
     file.flush().expect("Could not flush temp file");
+
+    let fzf_output = fzf(&temp_file).expect("Could not capture output from fzf");
+
+    if fzf_output.len() == 0 {
+        panic!();
+    }
+}
+
+fn fzf(path: &str) -> Result<Vec<String>, String> {
+    let stdout = Command::new("bash")
+        .arg("-c")
+        .arg(format!("cat '{}' | fzf", path))
+        .output()
+        .expect("Failed to capture output")
+        .stdout;
+    let lines: Result<Vec<String>, std::io::Error> = stdout.lines().collect();
+
+    // Return the lines or propagate any IO errors
+    lines.map_err(|e| format!("Failed to read lines: {}", e))
 }
 
 fn get_repos() -> Result<Vec<String>, String> {
