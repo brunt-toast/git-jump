@@ -34,6 +34,7 @@ fn main() {
     if fzf_output.len() == 0 {
         panic!();
     }
+    println!("{}", fzf_output[0]);
 }
 
 fn fzf(path: &str) -> Result<Vec<String>, String> {
