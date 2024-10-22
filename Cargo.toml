@@ -2,6 +2,8 @@
 name = "git-jump"
 version = "0.1.0"
 edition = "2021"
+description = "Quickly jump to any git repo on the system. Requires fzf and plocate."
+license = "MIT"
 
 [dependencies]
 home = "0.5.9"
