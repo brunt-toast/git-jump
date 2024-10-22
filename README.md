@@ -11,7 +11,7 @@ Quickly jump to any git repository on the file system.
 
 Install via cargo: 
 ```bash
-cargo install --git https://github.com/brunt-toast/git-jump.git
+cargo install git-jump
 ```
 ## Setup 
 For effective use, plocate must have indexed the file system. Use the `updatedb` command to index the file system. New repositories will not appear until the database is updated. Consider setting up a cron job to update the database periodically. 
