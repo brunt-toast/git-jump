@@ -1,5 +1,6 @@
 use serde::Deserialize;
 use serde_json::Error;
+use std::env;
 use std::fs::File;
 use std::io::BufReader;
 
@@ -11,13 +12,35 @@ pub struct Config {
 
 impl Config {
     pub fn from_json_file() -> Result<Self, Error> {
+        let verbose = env::args().any(|s| s == "-v" || s == "--verbose");
+
         let home_dir = match home::home_dir() {
             Some(d) => d,
             None => panic!("Could not find the home directory to load config"),
         };
         let path = home_dir.join(".config").join("git-jump.json");
+        if verbose {
+            println!(
+                "Home directory: {}",
+                match home_dir.to_str() {
+                    Some(s) => s,
+                    None => "Unknown",
+                }
+            );
+            println!(
+                "Config path: {}",
+                match path.to_str() {
+                    Some(s) => s,
+                    None => "Unknown",
+                }
+            );
+        }
 
         if !path.exists() {
+            if verbose {
+                println!("Config path does not exist, using default config");
+            }
+
             return Ok(Config {
                 blacklist: Vec::new(),
                 whitelist: Vec::new(),
