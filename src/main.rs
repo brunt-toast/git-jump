@@ -36,5 +36,13 @@ fn get_repos() -> Result<Vec<String>, String> {
         .expect("Failed to read lines");
 
     let ret_with_whitelist = conf.clone().filter_whitelist(ret_unfiltered);
-    Ok(conf.filter_blacklist(ret_with_whitelist))
+    let mut ret_with_blacklist = conf.filter_blacklist(ret_with_whitelist);
+
+    for item in ret_with_blacklist.iter_mut() {
+        if let Some(s) = item.strip_suffix(".git") {
+            *item = s.to_string();
+        }
+    }
+
+    Ok(ret_with_blacklist)
 }
