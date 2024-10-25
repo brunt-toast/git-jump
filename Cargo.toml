@@ -2,7 +2,7 @@
 name = "git-jump"
 version = "0.1.3"
 edition = "2021"
-description = "Quickly jump to any git repo on the system. Requires fzf and plocate."
+description = "Quickly jump to any version-controlled repository on the system. Requires fzf and plocate."
 license-file = "LICENSE.md"
 
 [dependencies]
