@@ -1,6 +1,6 @@
 # brunt-toast/git-jump 
 
-Quickly jump to any git repository on the file system. 
+Quickly jump to any version-controlled repository on the file system. 
 
 ## Requirements 
 
