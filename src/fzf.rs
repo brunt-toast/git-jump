@@ -4,7 +4,19 @@ use std::process::Command;
 pub fn fzf(path: &str) -> Result<String, String> {
     let stdout = Command::new("bash")
         .arg("-c")
-        .arg(format!("cat '{}' | fzf", path))
+        .arg(
+            format!(
+                "cat '{}' | fzf 
+                --preview \"tree '{}' -L 1\" 
+                --info \"hidden\" 
+                --header \"git-jump\" 
+                --header-first 
+                --reverse 
+                --keep-right",
+                path, "{}"
+            )
+            .replace("\n", ""),
+        )
         .output()
         .expect("Failed to capture output")
         .stdout;
