@@ -28,7 +28,7 @@ pub fn fzf(path: &str) -> Result<String, String> {
         .expect("Failed to read lines");
 
     if lines.len() == 0 {
-        return Err("fzf produced no output".to_owned());
+        return Ok("".to_owned());
     }
 
     return Ok(format!("{}", lines[0]));

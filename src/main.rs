@@ -15,7 +15,12 @@ fn main() {
 
     let fzf_output =
         fzf::fzf(&tempfile::get_temp_file_path()).expect("Could not capture output from fzf");
-    println!("{}", fzf_output);
+
+    if fzf_output.len() == 0 {
+        println!(".")
+    } else {
+        println!("{}", fzf_output);
+    }
 
     tempfile::delete_temp_file();
 }
