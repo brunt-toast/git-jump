@@ -28,7 +28,7 @@ fn main() {
 fn get_repos() -> Result<Vec<String>, String> {
     let conf = config::Config::from_json_file().expect("Could not load configuration");
 
-    let ret_unfiltered = get_repos_of_type(".git")
+    let mut ret_unfiltered: Vec<String> = get_repos_of_type(".git")
         .into_iter()
         .chain(get_repos_of_type(".svn"))
         .chain(get_repos_of_type(".hg"))
@@ -40,6 +40,13 @@ fn get_repos() -> Result<Vec<String>, String> {
         .chain(get_repos_of_type("$tf"))
         .chain(get_repos_of_type(".tfs"))
         .collect();
+
+    for additional_repo in conf.additional_repos.iter() {
+        let more_repos = get_repos_of_type(&format!("{}", additional_repo));
+        for more_repo in more_repos.iter() {
+            ret_unfiltered.push(more_repo.to_owned());
+        }
+    }
 
     let ret_with_whitelist = conf.clone().filter_whitelist(ret_unfiltered);
     let ret_with_blacklist = conf.filter_blacklist(ret_with_whitelist);

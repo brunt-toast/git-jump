@@ -8,6 +8,7 @@ use std::io::BufReader;
 pub struct Config {
     blacklist: Vec<String>,
     whitelist: Vec<String>,
+    pub additional_repos: Vec<String>,
 }
 
 impl Config {
@@ -44,6 +45,7 @@ impl Config {
             return Ok(Config {
                 blacklist: Vec::new(),
                 whitelist: Vec::new(),
+                additional_repos: Vec::new(),
             });
         }
 
