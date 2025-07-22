@@ -1,6 +1,6 @@
 [package]
 name = "git-jump"
-version = "0.1.5"
+version = "0.1.6"
 edition = "2021"
 description = "Quickly jump to any version-controlled repository on the system. Requires fzf and plocate."
 license-file = "LICENSE.md"
