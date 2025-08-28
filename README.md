@@ -35,3 +35,17 @@ git-jump will search for configuration settings in `~/.config/git-jump.json` (or
 Any repo whose starts with a string in the blacklist will be excluded from results. If the whitelist is populated, the program will only show repos whose paths begin with at least one member of the whitelist. Note that the values of blacklist and whitelist do not support globbing. They are used in a simple case-insensitive string comparison. 
 
 By default, git-jump will search for a variety of well-known source control database folders. Additional targets can be added in the `additional_repos` array. Any directory containing a file or directory matching a name specified in this array will be presented as a potential result, so long as it is valid in the whitelist and/or not excluded by the blacklist. 
+
+## Common Issues 
+
+### Targets in a certain volume are missing 
+
+If targets within a given volume are missing, it's likely that the volume in question isn't being indexed for `plocate`. This can happen by default with bind mounts and some file systems. 
+
+Open the file `/etc/updatedb.conf` and ensure the following
+* The target volume is not listed in `PRUNEPATHS`
+* The target volume's filesystem is not in the `PRUNEFS` list 
+* The variable `PRUNE_BIND_MOUNTS` is set to `"no"`
+
+Once the configuration is correct, updating the database should index the volume.
+
